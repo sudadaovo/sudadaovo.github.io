@@ -2,51 +2,249 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>緊急メンテナンス中 | CouponBox</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>メンテナンス中 | CouponBox</title>
   <style>
+    :root{
+      --bg1:#cfe8ff;
+      --bg2:#bfe1ff;
+      --panel:#ffffff;
+      --blue:#3aa1d6;
+      --blue2:#2f89bf;
+      --shadow:#0b3550;
+      --text:#12324a;
+      --muted:#2e5977;
+      --badge:#ff6a8e;
+      --badgeText:#ffffff;
+      --btn:#3aa1d6;
+      --btnText:#ffffff;
+    }
+
     body{
       margin:0;
       min-height:100vh;
       display:flex;
       align-items:center;
       justify-content:center;
-      background:#0f172a;
-      color:#fff;
-      font-family:system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP",sans-serif;
-      text-align:center;
       padding:24px;
+      color:var(--text);
+      background:
+        repeating-linear-gradient(
+          to bottom,
+          rgba(255,255,255,.0) 0px,
+          rgba(255,255,255,.0) 6px,
+          rgba(255,255,255,.25) 7px
+        ),
+        radial-gradient(1200px 700px at 20% 10%, var(--bg1), transparent 60%),
+        radial-gradient(1000px 800px at 80% 20%, var(--bg2), transparent 55%),
+        #bcdcff;
+      font-family: system-ui,-apple-system,"Segoe UI",Roboto,"Noto Sans JP","Hiragino Kaku Gothic ProN",Meiryo,sans-serif;
     }
+
+    .frame{
+      width:min(860px, 100%);
+      position:relative;
+      padding:14px;
+      border-radius:10px;
+      background:linear-gradient(180deg, rgba(58,161,214,.18), rgba(58,161,214,.08));
+      box-shadow: 0 18px 0 rgba(11,53,80,.12);
+    }
+
+    .frame::before{
+      content:"";
+      position:absolute;
+      left:18px;
+      right:18px;
+      top:10px;
+      height:8px;
+      background:
+        repeating-linear-gradient(
+          to right,
+          rgba(255,255,255,.85) 0 10px,
+          rgba(255,255,255,0) 10px 18px
+        );
+      opacity:.9;
+      pointer-events:none;
+    }
+
     .card{
-      max-width:720px;
-      width:100%;
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.12);
-      border-radius:16px;
-      padding:28px 22px;
+      background:rgba(255,255,255,.82);
+      border:3px solid var(--blue2);
+      border-radius:10px;
+      overflow:hidden;
+      box-shadow:
+        0 0 0 4px rgba(11,53,80,.08) inset,
+        0 10px 0 rgba(11,53,80,.14);
     }
-    h1{margin:0 0 10px;font-size:28px;}
-    p{margin:8px 0;opacity:.9;line-height:1.6;}
-    a{color:#93c5fd;text-decoration:none;}
-    a:hover{text-decoration:underline;}
+
+    .topbar{
+      background:linear-gradient(180deg, var(--blue), #2f8ec7);
+      padding:16px 18px;
+      border-bottom:3px solid var(--shadow);
+    }
+
+    .brand{
+      margin:0;
+      font-weight:900;
+      letter-spacing:.06em;
+      color:#fff;
+      font-size:34px;
+      line-height:1;
+      text-transform:lowercase;
+      text-shadow:
+        2px 0 0 rgba(11,53,80,.6),
+       -2px 0 0 rgba(11,53,80,.6),
+        0 2px 0 rgba(11,53,80,.6),
+        0 -2px 0 rgba(11,53,80,.6);
+    }
+
+    .content{
+      padding:22px 22px 18px;
+    }
+
+    .headline{
+      margin:0 0 14px;
+      font-size:20px;
+      font-weight:800;
+      color:var(--text);
+    }
+
+    .list{
+      list-style:none;
+      padding:0;
+      margin:0 0 18px;
+      display:grid;
+      gap:12px;
+    }
+
+    .item{
+      display:flex;
+      align-items:flex-start;
+      gap:10px;
+      color:var(--muted);
+      line-height:1.7;
+      font-size:16px;
+    }
+
+    .dot{
+      flex:0 0 auto;
+      width:10px;
+      height:10px;
+      margin-top:7px;
+      background:var(--blue);
+      box-shadow: 2px 2px 0 rgba(11,53,80,.35);
+      border-radius:2px;
+    }
+
     .badge{
-      display:inline-block;
-      margin-bottom:14px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(239,68,68,0.18);
-      border:1px solid rgba(239,68,68,0.35);
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      font-weight:800;
       font-size:13px;
+      color:var(--muted);
+    }
+    .badge b{
+      display:inline-block;
+      padding:2px 8px;
+      border-radius:6px;
+      background:var(--badge);
+      color:var(--badgeText);
+      box-shadow: 2px 2px 0 rgba(11,53,80,.25);
+      font-weight:900;
+      letter-spacing:.02em;
+    }
+
+    .footer{
+      padding:0 22px 22px;
+      display:flex;
+      justify-content:center;
+    }
+
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      min-width:min(420px, 100%);
+      padding:14px 16px;
+      background:linear-gradient(180deg, var(--btn), #2f8ec7);
+      color:var(--btnText);
+      text-decoration:none;
+      font-weight:900;
+      border:3px solid var(--shadow);
+      border-radius:10px;
+      box-shadow: 0 8px 0 rgba(11,53,80,.22);
+      transition: transform .08s ease, box-shadow .08s ease, filter .15s ease;
+      letter-spacing:.02em;
+    }
+    .btn:active{
+      transform: translateY(4px);
+      box-shadow: 0 4px 0 rgba(11,53,80,.22);
+    }
+    .btn:hover{ filter: brightness(1.02); }
+
+    .email{
+      font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+      font-weight:900;
+      letter-spacing:.02em;
+    }
+
+    .note{
+      margin:0 0 10px;
+      color:var(--muted);
+      font-size:14px;
+      text-align:center;
+      opacity:.9;
+    }
+
+    @media (max-width:520px){
+      .brand{ font-size:28px; }
+      .headline{ font-size:18px; }
+      .content{ padding:18px 16px 14px; }
+      .footer{ padding:0 16px 18px; }
+      .item{ font-size:15px; }
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <div class="badge">緊急メンテナンス</div>
-    <h1>現在、システムを緊急メンテナンス中です</h1>
-    <p>ご不便をおかけして申し訳ございません。復旧まで今しばらくお待ちください。</p>
-    <p>クーポンをご利用になりたい場合は、下記までメールでご連絡ください。</p>
-    <p><a href="mailto:support@couponbox.jp">support@couponbox.jp</a></p>
+  <div class="frame">
+    <div class="card" role="main" aria-label="maintenance">
+      <div class="topbar">
+        <h1 class="brand">couponbox.jp</h1>
+      </div>
+
+      <div class="content">
+        <p class="headline">現在メンテナンス中です（復旧作業を進めています）</p>
+
+        <ul class="list">
+          <li class="item">
+            <span class="dot" aria-hidden="true"></span>
+            <span class="badge">緊急対応中です</span>
+          </li>
+          <li class="item">
+            <span class="dot" aria-hidden="true"></span>
+            <span>ご不便をおかけして申し訳ありません。復旧まで少々お待ちください。</span>
+          </li>
+          <li class="item">
+            <span class="dot" aria-hidden="true"></span>
+            <span>クーポンの確認が必要な場合は、下記メールへご連絡ください。</span>
+          </li>
+          <li class="item">
+            <span class="dot" aria-hidden="true"></span>
+            <span>状況により復旧予定が前後する場合があります。</span>
+          </li>
+        </ul>
+
+        <p class="note">※ 返信は順次対応します</p>
+      </div>
+
+      <div class="footer">
+        <a class="btn" href="mailto:support@couponbox.jp">
+          <span class="email">support@couponbox.jp</span>
+        </a>
+      </div>
+    </div>
   </div>
 </body>
 </html>
